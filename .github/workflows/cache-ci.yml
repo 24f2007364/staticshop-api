@@ -11,25 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Cache dependencies
-        id: cache-step
+        id: cache_step
         uses: actions/cache@v4
         with:
           path: ~/.cache/demo
           key: cache-ecb605f
 
-      - name: Create cache directory
+      - name: Write cache content
         run: |
           mkdir -p ~/.cache/demo
-          echo "cached-data" > ~/.cache/demo/sample.txt
+          echo "demo data" > ~/.cache/demo/data.txt
 
       - name: prime-cache-ecb605f
         run: |
-          if [ "${{ steps.cache-step.outputs.cache-hit }}" = "true" ]; then
-            echo "Cache hit"
-          else
-            echo "Cache miss"
-          fi
+          echo "Cache hit: ${{ steps.cache_step.outputs.cache-hit }}"
